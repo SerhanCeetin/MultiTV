@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--Name: MultiTV-->
+<!--Version: 1.0-->
+<!--Author: Serhan Çetin, ceetinserhan@gmail.com -->
+<!--Licence: MIT Licence - https://github.com/SerhanCeetin/MultiTV/blob/main/LICENSE -->
+<!--Source: https://github.com/SerhanCeetin/MultiTV/ -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="SerhanCeetin, ceetinserhan@gmail.com">
+    <title>MultiTV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style id="general-css">
+        body {
+            background-color: #000;
+            height: 97vh;
+        }
+
+        .video-grid {
+            position: relative;
+            display: grid;
+            grid-gap: 1px;
+            height: 97vh;
+            margin-left: 1vw;
+            margin-right: 1vw;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr min-content;
+        }
+
+        #c3 {
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+        }
+
+        #c6 {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+        }
+
+        #c9 {
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+        }
+
+        #c12 {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+        }
+
+        #c15 {
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+        }
+
+        #c16 {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+        }
+
+        #c20 {
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+        }
+
+        #c25 {
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+        }
+
+        .video {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: white;
+        }
+
+        a:link {
+            color: white;
+        }
+    </style>
+
+    <style id="settings-css">
+        #sidenav {
+            display: none;
+            height: 100%;
+            width: 15vw;
+            position: fixed;
+            z-index: 99;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 5vh;
+            padding-left: 3vw;
+            padding-right: 3vw;
+        }
+
+        #sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            color: #ffffff;
+        }
+
+        #settingsbtn {
+            margin-left: -1px;
+            position: absolute;
+            font-size: 20px;
+            max-font-size: 2vw;
+            min-font-size: 1vw;
+            cursor: pointer;
+            color: #ffffff;
+            z-index: 5;
+        }
+
+        input {
+            width: 9vw;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            margin-bottom: 1vh;
+            font-size: clamp(8px, 1vw, 15px);
+        }
+
+        .settings-text {
+            color: #ffffff;
+            font-family: Lato, sans-serif;
+            font-size: clamp(8px, 1vw, 15px);
+            text-align: center;
+        }
+
+
+        #settings-footer {
+            position: sticky;
+            height: 50px;
+            top: calc(100vh - 100px);
+            width: inherit;
+            text-align: center;
+            font-size: clamp(8px, 1vw, 15px);
+            color: #ffffff;
+
+        }
+    </style>
+
+    <style id="buttons-css">
+        .multi-button {
+            margin-bottom: 1vh;
+            border-radius: 6px;
+            font-size: 0;
+            width: 12vw;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            font-family: Lato, sans-serif;
+            outline: none;
+            display: inline-flex;
+            place-items: center;
+            font-weight: bold;
+            background-color: #eeeeee;
+            border: none;
+            cursor: pointer;
+            padding: 1vw;
+            transition: background-color .4s;
+            font-size: clamp(8px, 1vw, 15px);
+            width: 3vw;
+        }
+
+        button:hover {
+            background-color: #dddddd;
+            transform: translate(0, 1px);
+        }
+
+        button:active {
+            background-color: #cccccc;
+            transform: translate(0, 2px);
+        }
+
+
+        button + button {
+            margin-left: 0;
+        }
+
+        .outer-left {
+            border-radius: 6px 0 0 6px;
+        }
+
+        .outer-right {
+            border-radius: 0 6px 6px 0;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+
+</head>
+<body>
+<div id="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <p class="settings-text">Video count</p>
+    <div class="multi-button">
+        <a href="?count=3">
+            <button class="outer-left">3</button>
+        </a>
+        <a href="?count=6">
+            <button>6</button>
+        </a>
+        <a href="?count=9">
+            <button>9</button>
+        </a>
+        <a href="?count=12">
+            <button class="outer-right">12</button>
+        </a>
+    </div>
+    <div class="multi-button">
+        <a href="?count=15">
+            <button class="outer-left">15</button>
+        </a>
+        <a href="?count=16">
+            <button>16</button>
+        </a>
+        <a href="?count=20">
+            <button>20</button>
+        </a>
+        <a href="?count=25">
+            <button class="outer-right">25</button>
+        </a>
+    </div>
+    <br>
+    <p class="settings-text">List of video IDs:</p>
+    <div id="settings-input-list">
+
+    </div>
+
+    <p id="settings-footer">Made with <i class="icon ion-heart" style="color: #e25555;"></i> by <a
+            href="https://github.com/SerhanCeetin"><b>Serhan Çetin</b></a>.</p>
+</div>
+<span onclick="openNav()" id="settingsbtn">&#9881;</span>
+
+<div class="video-grid">
+</div>
+
+<script>
+
+    const videoIDs = ["XEJM4Hcgd3M", "SqHIO2zhxbA", "UVPejgEw21c", "Rc5qrxlJZzc", "sd94keSra6A", "L0aI7O5KrVU", "V5mBTSql74Q", "8YPC2IV7ve0", "3QDiWPZ2D_k", "2r-B91zLZtc", "eenp_e9_c1Q", "hHSmBJk6w0c", "SdCJquYL-CQ", "xpoetRCJKqY", "LsmtMAUJAQ0", "oGHfM6AC7QU", "IrHwTRONXOs", "oIB7jWSHTAo", "eVVlKAUlSNQ", "bOlsH34--PU", "-zNkYBJ0wKI", "zJYTpkv7aAQ", "BSM8MIH7yAE", "MZ5D6NK5Qqo", "ix82Jy_Z89o"];
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    var videoCount = urlParams.get('count');
+    if (videoCount == null) {
+        videoCount = 9;
+    }
+    if (isNaN(videoCount)) {
+        videoCount = 9;
+    }
+    if (videoCount < 6) {
+        videoCount = 3;
+    }
+    if (videoCount > 6 && videoCount < 9) {
+        videoCount = 6;
+    }
+    if (videoCount > 9 && videoCount < 12) {
+        videoCount = 9;
+    }
+    if (videoCount > 12 && videoCount < 15) {
+        videoCount = 12;
+    }
+    if (videoCount > 15 && videoCount < 16) {
+        videoCount = 15;
+    }
+    if (videoCount > 16 && videoCount < 20) {
+        videoCount = 16;
+    }
+    if (videoCount > 20 && videoCount < 25) {
+        videoCount = 20;
+    }
+    if (videoCount > 25) {
+        videoCount = 25;
+    }
+
+
+    document.body.onload = function () {
+        document.getElementsByClassName('video-grid')[0].id = 'c' + videoCount;
+        for (var j = 1; j <= videoCount; j++) {
+            var input = document.createElement('input');
+            input.id = 'video' + j + 'id';
+            input.placeholder = 'Video ' + j;
+            input.value = videoIDs[j - 1];
+            document.getElementById('settings-input-list').appendChild(input);
+
+            var iframe = document.createElement('iframe');
+            iframe.id = 'video' + j;
+            iframe.className = 'video';
+            iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoIDs[j - 1] + '?autoplay=1&controls=1&mute=1';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+            iframe.allowfullscreen = true;
+            document.getElementsByClassName('video-grid')[0].appendChild(iframe);
+            document.getElementById('video' + j + 'id').addEventListener('change', function () {
+                var id = this.id.replace('video', '').replace('id', '');
+                var videoName = this.value;
+                document.getElementById('video' + id).src = 'https://www.youtube-nocookie.com/embed/' + videoName + '?autoplay=1&controls=1&mute=1';
+            });
+        }
+    }
+
+</script>
+<script>
+    function openNav() {
+        document.getElementById("sidenav").style.display = "block";
+    }
+
+    function closeNav() {
+        document.getElementById("sidenav").style.display = "none";
+    }
+</script>
+</body>
+</html>
